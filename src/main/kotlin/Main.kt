@@ -21,6 +21,43 @@ fun main() {
             "Output: 7\n" +
             "actual: ${findMissingNumber(mutableListOf(8, 3, 5, 2, 4, 6, 0, 1))}")
 
+    println("Cyclic Sort #3 Find Missing Numbers -------------------")
+    println("Input: [2, 3, 1, 8, 2, 3, 5, 1]\n" +
+            "Output: 4, 6, 7\n" +
+            "actual: ${findMissingNumbers(mutableListOf(2, 3, 1, 8, 2, 3, 5, 1))}")
+    println("Input: [2, 4, 1, 2]\n" +
+            "Output: 3\n" +
+            "actual: ${findMissingNumbers(mutableListOf(2, 4, 1, 2))}")
+    println("Input: [2, 3, 2, 1]\n" +
+            "Output: 4\n" +
+            "actual: ${findMissingNumbers(mutableListOf(2, 3, 2, 1))}")
+
+}
+/*
+    We are given an unsorted array containing numbers taken from the range 1 to ‘n’.
+    The array can have duplicates, which means some numbers will be missing. Find all those missing numbers.
+ */
+fun findMissingNumbers(list: MutableList<Int>): MutableList<Int> {
+    if(list.size <= 1) return mutableListOf()
+    // plan is to cyclic sort the list and then iterate again to see
+    //   which indices satisfy list[index] != index
+    var index = 0
+    val result = mutableListOf<Int>()
+    while(index < list.size) {
+        val temp = list[index] // 2
+        if(temp != index && list[index] != list[temp-1]) { // 2 != 0
+            //swap
+            list[index] = list[temp-1]
+            list[temp-1] = temp
+        } else {
+            index++
+        }
+    }
+    //check for missing
+    for(i in list.indices) {
+        if(list[i] != i+1) result.add(i+1)
+    }
+    return result
 }
 /*
     We are given an array containing ‘n’ distinct numbers taken from the range 0 to ‘n’.
