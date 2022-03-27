@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main() {
 
     println("Cyclic Sort #1 Easy -------------------")
@@ -32,6 +34,34 @@ fun main() {
             "Output: 4\n" +
             "actual: ${findMissingNumbers(mutableListOf(2, 3, 2, 1))}")
 
+    println("Cyclic Sort #4 Find Duplicate Number -------------------")
+    println("Input: [1, 4, 4, 3, 2]\n" +
+            "Output: 4\n" +
+            "actual: ${findDuplicateNumber(mutableListOf(1, 4, 4, 3, 2))}")
+    println("Input: [2, 1, 3, 3, 5, 4]\n" +
+            "Output: 3\n" +
+            "actual: ${findDuplicateNumber(mutableListOf(2, 1, 3, 3, 5, 4))}")
+    println("Input: [2, 4, 1, 4, 4]\n" +
+            "Output: 4\n" +
+            "actual: ${findDuplicateNumber(mutableListOf(2, 4, 1, 4, 4))}")
+
+}
+
+/*
+    Find that duplicate number without using any extra space.
+ */
+fun findDuplicateNumber(list: MutableList<Int>): Int {
+    if(list.size <= 1) return 0
+
+    var index = 0
+    while(index < list.size) {
+        val foundIndex = list[index]-1
+        if(list[foundIndex] != list[index]) {
+            Collections.swap(list,foundIndex,index)
+        } else if(foundIndex != index) return list[index]
+        else index++
+    }
+    return -1
 }
 /*
     We are given an unsorted array containing numbers taken from the range 1 to ‘n’.
